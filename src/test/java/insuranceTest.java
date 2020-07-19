@@ -1,4 +1,5 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -9,7 +10,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
@@ -38,9 +38,9 @@ public class insuranceTest {
     public void checkString(String getString, String comparison) {
         System.out.println("Ожидаем, что строка " + getString + " равна строке " + comparison);
         if (getString.equals(comparison)) {
-            System.out.println("Строки равны");
+            System.out.println("Фактический результат: строки равны");
         } else {
-            System.out.println("Строки не равны");
+            System.out.println("Фактический результат: строки не равны");
         }
     }
 
@@ -75,21 +75,31 @@ public class insuranceTest {
 
         driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление']"));                   //Проверка активной вкладки "Оформление"
 
-        fildFieldString(By.id("surname_vzr_ins_0"), lastName);                                                                    //Заполнение поля "Фамилия" раздел "Застрахованные"
-        fildFieldString(By.id("name_vzr_ins_0"), firstName);                                                                      //Заполнение поля "Имя" раздел "Застрахованные"
-        fildFieldString(By.id("birthDate_vzr_ins_0"), birthDate);                                                                 //Заполнение поля "Дата" рождения "Застрахованные"
-        fildFieldString(By.id("person_lastName"), lastName);                                                                       //Заполнение поля "Фамилия" раздел "Страхователь"
-        fildFieldString(By.id("person_firstName"), firstName);                                                                    //Заполнение поля "Имя" раздел "Страхователь"
-        fildFieldString(By.id("person_birthDate"), birthDate);                                                                    //Заполнение поля "Дата" рождения раздел "Страхователь"
-        fildFieldString(By.id("documentDate"),passportDateOfIssue);                                                               //Заполнение поля "Дата выдачи" раздел "Паспортные данные"
+        checkString(driver.getTitle(), "Страхование путешественников");
+
+
+        //Заполнение формы "Оформление"
+        fildFieldString(By.id("surname_vzr_ins_0"), lastName);
+        fildFieldString(By.id("name_vzr_ins_0"), firstName);
+        fildFieldString(By.id("birthDate_vzr_ins_0"), birthDate);
+        fildFieldString(By.id("person_birthDate"), birthDate);
+        fildFieldString(By.id("documentDate"),passportDateOfIssue);
         fildFieldString(By.id("documentIssue"), passportIssue);
         fildFieldString(By.id("passportSeries"),passportSeries);
         fildFieldString(By.id("documentIssue"), passportDateOfIssue);
         fildFieldString(By.id("passportNumber"), passportNumber);
+        fildFieldString(By.id("person_lastName"), lastName);
+        fildFieldString(By.id("person_firstName"), firstName);
 
         driver.findElement(By.xpath("//label[@for=\"checkbox-person_isEmptyMiddleName\"]/span[@class=\"checkbox\"]")).click(); //Активация чек бокса "Отчество отсутствует" раздел "Страхователь"
 
         driver.findElement(By.xpath("//div[@class=\"btn-group\"]/label[contains(text(),\"Мужской\")]")).click();            //Клик по кнопке "Мужской"
+
+        driver.findElement(By.xpath("//*[contains(text(), 'Продолжить')]")).click();
+
+        //Assert.assertEquals("Поле не заполнено", driver.findElement(By.xpath("//input-email[@name='email']/span/validation-message/span[text()='Поле не заполнено.']")));
+        //Assert.assertEquals("Поле не заполнено", driver.findElement(By.xpath("//input-phone2[@name='phone']/span/validation-message/span[text()='Поле не заполнено.']")));
+      // Assert.assertEquals("Поле не заполнено", driver.findElement(By.xpath("//input-email[@name='repeatEmail']/span/validation-message/span[text()='Поле не заполнено.']")));
 
 
         driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление123']"));
