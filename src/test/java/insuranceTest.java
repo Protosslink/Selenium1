@@ -22,15 +22,16 @@ public class insuranceTest {
     String firstName = "Дмитрий";
     String lastName = "Барабанов";
     String birthDate = "13.03.1989";
-    String passportDateOfIssue = "01.01.2009":
-    int passportSeries = 1111;
-    int passportNumber = 111111;
+    String passportDateOfIssue = "01.01.2009";
+    String passportSeries = "1111";
+    String passportNumber = "111111";
+    String passportIssue = "Россией";
 
 
-    //Метод заполнения строк
-    public void fildField(By locator, String value) {
+    //Метод заполнения строк String
+    public void fildFieldString(By locator, String valueString) {
         driver.findElement(locator).clear();                        //Очистка поля
-        driver.findElement(locator).sendKeys(value);                // Заполнение поля типом String
+        driver.findElement(locator).sendKeys(valueString);          // Заполнение поля типом String
     }
 
     //Метод проверки строк
@@ -74,20 +75,24 @@ public class insuranceTest {
 
         driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление']"));                   //Проверка активной вкладки "Оформление"
 
-        fildField(By.id("surname_vzr_ins_0"), lastName);                                                                   //Заполнение поля Фамилия раздел Застрахованные
-        fildField(By.id("name_vzr_ins_0"), firstName);                                                                      //Заполнение поля Имя раздел Застрахованные
-        fildField(By.id("birthDate_vzr_ins_0"), birthDate);                                                                 //Заполнение поля Дата рождения Застрахованные
-        fildField(By.id("person_lastName"), lastName);                                                                     //Заполнение поля Фамилия раздел Страхователь
-        fildField(By.id("person_firstName"), firstName);                                                                    //Заполнение поля Имя раздел Страхователь
-        fildField(By.id("person_birthDate"), birthDate);                                                                     //Заполнение поля Дата рождения Страхователь
+        fildFieldString(By.id("surname_vzr_ins_0"), lastName);                                                                    //Заполнение поля "Фамилия" раздел "Застрахованные"
+        fildFieldString(By.id("name_vzr_ins_0"), firstName);                                                                      //Заполнение поля "Имя" раздел "Застрахованные"
+        fildFieldString(By.id("birthDate_vzr_ins_0"), birthDate);                                                                 //Заполнение поля "Дата" рождения "Застрахованные"
+        fildFieldString(By.id("person_lastName"), lastName);                                                                       //Заполнение поля "Фамилия" раздел "Страхователь"
+        fildFieldString(By.id("person_firstName"), firstName);                                                                    //Заполнение поля "Имя" раздел "Страхователь"
+        fildFieldString(By.id("person_birthDate"), birthDate);                                                                    //Заполнение поля "Дата" рождения раздел "Страхователь"
+        fildFieldString(By.id("documentDate"),passportDateOfIssue);                                                               //Заполнение поля "Дата выдачи" раздел "Паспортные данные"
+        fildFieldString(By.id("documentIssue"), passportIssue);
+        fildFieldString(By.id("passportSeries"),passportSeries);
+        fildFieldString(By.id("documentIssue"), passportDateOfIssue);
+        fildFieldString(By.id("passportNumber"), passportNumber);
 
-        driver.findElement(By.xpath("//label[@for=\"checkbox-person_isEmptyMiddleName\"]/span[@class=\"checkbox\"]")).click(); //Активация чек бокса "Отчество отсутствует" раздел Страхователь
+        driver.findElement(By.xpath("//label[@for=\"checkbox-person_isEmptyMiddleName\"]/span[@class=\"checkbox\"]")).click(); //Активация чек бокса "Отчество отсутствует" раздел "Страхователь"
 
         driver.findElement(By.xpath("//div[@class=\"btn-group\"]/label[contains(text(),\"Мужской\")]")).click();            //Клик по кнопке "Мужской"
 
 
-
-        //driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление123']"));
+        driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление123']"));
 
 
     }
