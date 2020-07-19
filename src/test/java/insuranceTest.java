@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,6 +19,7 @@ public class insuranceTest {
     String baseURL;
 
     public void checkString(String getString, String comparison) {
+
         System.out.println("Ожидаем, что строка " + getString + " равна строке " + comparison);
         if (getString.equals(comparison)) {
             System.out.println("Строки равны");
@@ -38,14 +40,24 @@ public class insuranceTest {
 
     @Test
     public void testInsurance() {
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
-        WebElement link = driver.findElement(By.xpath("//span[contains(text(), 'Страхование')]"));       //Нашли на странице эдемент "Страхование"
-        driver.findElement(By.xpath("//span[contains(text(), 'Страхование')]")).click();
-        driver.findElement(By.xpath("//span[contains(text(), 'Страхование')]")).click();
-        driver.findElement(By.xpath("(//A[@href='/ru/person/bank_inshure/insuranceprogram/life/travel'][text()='Страхование путешественников'][text()='Страхование путешественников'])[1]")).click();
-        checkString(driver.getTitle(), "«Сбербанк» - Страхование путешественников");
-        driver.findElement(By.xpath("//B[@class='kit-button__text'][text()='Оформить онлайн']")).click();
-        driver.findElement(By.xpath("//B[@class='kit-button__text'][text()='Оформить онлайн']")).click();
+        WebElement link = driver.findElement(By.xpath("(//A[@href='/ru/person/bank_inshure/insuranceprogram/life/travel'][text()='Страхование путешественников'][text()='Страхование путешественников'])[1]"));
+        Wait<WebDriver> wait = new WebDriverWait(driver, 10, 1000);
+
+
+        driver.findElement(By.xpath("//span[contains(text(), 'Страхование')]")).click();                                  //Выбор меню "Страхование"
+        driver.findElement(By.xpath("//span[contains(text(), 'Страхование')]")).click();                                  //Выбор меню "Страхование"
+
+        wait.until(ExpectedConditions.visibilityOf(link)).click();                                                        //Ожидние появления пунтка "Страхование путешественников" в меню "Страхование" и кликаем по нему
+
+        checkString(driver.getTitle(), "«Сбербанк» - Страхование путешественников");                             // Проверка титла окна "«Сбербанк» - Страхование путешественников"
+
+        driver.findElement(By.xpath("//B[@class='kit-button__text'][text()='Оформить онлайн']")).click();                  //Клик по кнопке "Оформить онлайн"
+
+        driver.findElement(By.xpath("//div[@class=\"online-card-program selected\"]/h3[contains(text(), 'Минимальная')]")); //Проверка выбора минимального полис
+
+
+
+
 
 
 
