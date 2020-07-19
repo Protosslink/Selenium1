@@ -18,8 +18,23 @@ public class insuranceTest {
     WebDriver driver;
     String baseURL;
 
-    public void checkString(String getString, String comparison) {
+    //Переменные
+    String firstName = "Дмитрий";
+    String lastName = "Барабанов";
+    String birthDate = "13.03.1989";
+    String passportDateOfIssue = "01.01.2009":
+    int passportSeries = 1111;
+    int passportNumber = 111111;
 
+
+    //Метод заполнения строк
+    public void fildField(By locator, String value) {
+        driver.findElement(locator).clear();                        //Очистка поля
+        driver.findElement(locator).sendKeys(value);                // Заполнение поля типом String
+    }
+
+    //Метод проверки строк
+    public void checkString(String getString, String comparison) {
         System.out.println("Ожидаем, что строка " + getString + " равна строке " + comparison);
         if (getString.equals(comparison)) {
             System.out.println("Строки равны");
@@ -55,10 +70,24 @@ public class insuranceTest {
 
         driver.findElement(By.xpath("//div[@class=\"online-card-program selected\"]/h3[contains(text(), 'Минимальная')]")); //Проверка выбора минимального полис
 
+        driver.findElement(By.xpath("//*[contains(text(), 'Оформить')]")).click();                                          //Клик по кнопке "Оформить"
+
+        driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление']"));                   //Проверка активной вкладки "Оформление"
+
+        fildField(By.id("surname_vzr_ins_0"), lastName);                                                                   //Заполнение поля Фамилия раздел Застрахованные
+        fildField(By.id("name_vzr_ins_0"), firstName);                                                                      //Заполнение поля Имя раздел Застрахованные
+        fildField(By.id("birthDate_vzr_ins_0"), birthDate);                                                                 //Заполнение поля Дата рождения Застрахованные
+        fildField(By.id("person_lastName"), lastName);                                                                     //Заполнение поля Фамилия раздел Страхователь
+        fildField(By.id("person_firstName"), firstName);                                                                    //Заполнение поля Имя раздел Страхователь
+        fildField(By.id("person_birthDate"), birthDate);                                                                     //Заполнение поля Дата рождения Страхователь
+
+        driver.findElement(By.xpath("//label[@for=\"checkbox-person_isEmptyMiddleName\"]/span[@class=\"checkbox\"]")).click(); //Активация чек бокса "Отчество отсутствует" раздел Страхователь
+
+        driver.findElement(By.xpath("//div[@class=\"btn-group\"]/label[contains(text(),\"Мужской\")]")).click();            //Клик по кнопке "Мужской"
 
 
 
-
+        //driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление123']"));
 
 
     }
