@@ -23,7 +23,7 @@ public class insuranceTest {
     String firstName = "Дмитрий";
     String lastName = "Барабанов";
     String birthDate = "13.03.1989";
-    String passportDateOfIssue = "01.01.2009";
+    String passportDateOfIssue = "07.04.2009";
     String passportSeries = "1111";
     String passportNumber = "111111";
     String passportIssue = "Россия";
@@ -31,8 +31,11 @@ public class insuranceTest {
 
     //Метод заполнения строк String
     public void fildFieldString(By locator, String valueString) {
-        driver.findElement(locator).clear();                        //Очистка поля
-        driver.findElement(locator).sendKeys(valueString);          // Заполнение поля типом String
+        WebElement element = driver.findElement(locator);
+        element.click();                        //Клип по полю
+        element.clear();                        //Очистка поля
+        element.sendKeys(valueString);          // Заполнение поля типом String
+
     }
 
     //Метод проверки строк
@@ -68,7 +71,7 @@ public class insuranceTest {
 
         checkString(driver.getTitle(), "«Сбербанк» - Страхование путешественников");                             // Проверка титла окна "«Сбербанк» - Страхование путешественников"
 
-        driver.findElement(By.xpath("//B[@class='kit-button__text'][text()='Оформить онлайн']")).click();                  //Клик по кнопке "Оформить онлайн"
+        driver.findElement(By.xpath("//B[@class='kit-button__text' and text()='Оформить онлайн']")).click();                  //Клик по кнопке "Оформить онлайн"
 
         driver.findElement(By.xpath("//div[@class=\"online-card-program selected\"]/h3[contains(text(), 'Минимальная')]")); //Проверка выбора минимального полис
 
@@ -82,6 +85,7 @@ public class insuranceTest {
 
 
         //Заполнение формы "Оформление"
+        fildFieldString(By.id("documentDate"), passportDateOfIssue);
         fildFieldString(By.id("surname_vzr_ins_0"), lastName);
         fildFieldString(By.id("name_vzr_ins_0"), firstName);
         fildFieldString(By.id("birthDate_vzr_ins_0"), birthDate);
@@ -90,13 +94,11 @@ public class insuranceTest {
         fildFieldString(By.id("person_birthDate"), birthDate);
         fildFieldString(By.id("passportSeries"), passportSeries);
         fildFieldString(By.id("passportNumber"), passportNumber);
-        fildFieldString(By.id("documentDate"), passportDateOfIssue);
         fildFieldString(By.id("documentIssue"), passportIssue);
 
 
-
         //Проверка соответствия заполнения формы "Оформление"
-        Assert.assertEquals(lastName , driver.findElement(By.id("surname_vzr_ins_0")).getAttribute("value"));
+        Assert.assertEquals(lastName, driver.findElement(By.id("surname_vzr_ins_0")).getAttribute("value"));
         Assert.assertEquals(firstName, driver.findElement(By.id("name_vzr_ins_0")).getAttribute("value"));
         Assert.assertEquals(birthDate, driver.findElement(By.id("birthDate_vzr_ins_0")).getAttribute("value"));
         Assert.assertEquals(birthDate, driver.findElement(By.id("person_birthDate")).getAttribute("value"));
@@ -115,9 +117,9 @@ public class insuranceTest {
         driver.findElement(By.xpath("//*[contains(text(), 'Продолжить')]")).click();                                        //Клик по кнопке "продолжить"
 
         Assert.assertEquals("При заполнении данных произошла ошибка", driver.findElement(By.xpath("//div[@class=\"alert-form alert-form-error\"]")).getText()); //Проверка сообщения "При заполнении данных произошла ошибка"
-
-
-        //driver.findElement(By.xpath("//div[@class='col-4 step-element active']/a[text()='Оформление123']")); // это пауза)
+        Assert.assertEquals("Поле не заполнено.", driver.findElement(By.xpath("//input[@id='phone']/..//span[@class='invalid-validate form-control__message']")).getText());
+        Assert.assertEquals("Поле не заполнено.", driver.findElement(By.xpath("//input[@id='email']/..//span[@class='invalid-validate form-control__message']")).getText());
+        Assert.assertEquals("Поле не заполнено.", driver.findElement(By.xpath("//input[@id='repeatEmail']/..//span[@class='invalid-validate form-control__message']")).getText());
 
 
     }
