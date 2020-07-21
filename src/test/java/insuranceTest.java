@@ -81,7 +81,8 @@ public class insuranceTest {
 
         checkString(driver.getTitle(), "Страхование путешественников");
 
-        Assert.assertEquals("Страхование путешественников", driver.getTitle());
+        Assert.assertEquals("Ошибка сравнения заголовка вкладки","Страхование путешественников", driver.getTitle());
+
 
 
         //Заполнение формы "Оформление"
@@ -116,10 +117,17 @@ public class insuranceTest {
 
         driver.findElement(By.xpath("//*[contains(text(), 'Продолжить')]")).click();                                        //Клик по кнопке "продолжить"
 
-        Assert.assertEquals("При заполнении данных произошла ошибка", driver.findElement(By.xpath("//div[@class=\"alert-form alert-form-error\"]")).getText()); //Проверка сообщения "При заполнении данных произошла ошибка"
-        Assert.assertEquals("Поле не заполнено.", driver.findElement(By.xpath("//input[@id='phone']/..//span[@class='invalid-validate form-control__message']")).getText());
-        Assert.assertEquals("Поле не заполнено.", driver.findElement(By.xpath("//input[@id='email']/..//span[@class='invalid-validate form-control__message']")).getText());
-        Assert.assertEquals("Поле не заполнено.", driver.findElement(By.xpath("//input[@id='repeatEmail']/..//span[@class='invalid-validate form-control__message']")).getText());
+        Assert.assertEquals("Ошибка При заполнении данных произошла ошибка не появилась "
+                ,"При заполнении данных произошла ошибка", driver.findElement(By.xpath("//div[@class=\"alert-form alert-form-error\"]")).getText());
+
+        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ","Поле не заполнено."
+                , driver.findElement(By.xpath("//input[@id='phone']/..//span[@class='invalid-validate form-control__message']")).getText());
+
+        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ","Поле не заполнено."
+                , driver.findElement(By.xpath("//input[@id='email']/..//span[@class='invalid-validate form-control__message']")).getText());
+
+        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ","Поле не заполнено."
+                , driver.findElement(By.xpath("//input[@id='repeatEmail']/..//span[@class='invalid-validate form-control__message']")).getText());
 
 
     }
