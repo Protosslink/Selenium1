@@ -1,10 +1,13 @@
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
@@ -13,12 +16,15 @@ public class BaseTest {
 
     protected static WebDriver driver;
     protected static String baseUrl;
-    public static Properties properties = TestProperties.getInstance().getProperties();
+    public static Properties properties;
 
-
-    protected static WebDriver driver;
-    protected static String baseUrl;
-    public static Properties properties = TestProperties.getInstance().getProperties();
+    static {
+        try {
+            properties = TestProperties.getInstance().getProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -56,13 +62,16 @@ public class BaseTest {
 
     }
 
-    protected void fillField(By locator, String value){
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(value);
+    public void fildFieldString(By locator, String valueString) {
+        WebElement element = driver.findElement(locator);
+        element.click();                        //Клип по полю
+        element.clear();                        //Очистка поля
+        element.sendKeys(valueString);          // Заполнение поля типом String
+
     }
 
     protected void checkFillField(String value, By locator){
-        assertEquals(value, driver.findElement(locator).getAttribute(value));
+        Assert.assertEquals(value, driver.findElement(locator).getAttribute(value));
     }
 
 }

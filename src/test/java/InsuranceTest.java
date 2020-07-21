@@ -14,10 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
-public class insuranceTest {
-
-    WebDriver driver;
-    String baseURL;
+public class InsuranceTest extends BaseTest {
 
     //Переменные
     String firstName = "Дмитрий";
@@ -29,15 +26,6 @@ public class insuranceTest {
     String passportIssue = "Россия";
 
 
-    //Метод заполнения строк String
-    public void fildFieldString(By locator, String valueString) {
-        WebElement element = driver.findElement(locator);
-        element.click();                        //Клип по полю
-        element.clear();                        //Очистка поля
-        element.sendKeys(valueString);          // Заполнение поля типом String
-
-    }
-
     //Метод проверки строк
     public void checkString(String getString, String comparison) {
         System.out.println("Ожидаем, что строка " + getString + " равна строке " + comparison);
@@ -48,23 +36,10 @@ public class insuranceTest {
         }
     }
 
-    public class InsuranceTest {
-        WebDriver driver;
-        String baseUrl;
-    }
-
-    @Before
-    public void beforeTest() {
-        System.setProperty("webdriver.chrome.driver", "drv/chromedriver.exe");
-        baseURL = "https://www.sberbank.ru/ru/person";                             // задали путь к сайту, который открываем
-        driver = new ChromeDriver();                                               // создали экземпляр класса ChromeDriver
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);         // ожидание
-        driver.manage().window().maximize();                                       // развернули окно браузера
-        driver.get(baseURL);
-    }
 
     @Test
     public void testInsurance() {
+        BaseTest.driver.get(BaseTest.baseUrl);
         WebElement link = driver.findElement(By.xpath("(//A[@href='/ru/person/bank_inshure/insuranceprogram/life/travel'][text()='Страхование путешественников'][text()='Страхование путешественников'])[1]"));
         Wait<WebDriver> wait = new WebDriverWait(driver, 10, 1000);
 
@@ -86,8 +61,7 @@ public class insuranceTest {
 
         checkString(driver.getTitle(), "Страхование путешественников");
 
-        Assert.assertEquals("Ошибка сравнения заголовка вкладки","Страхование путешественников", driver.getTitle());
-
+        Assert.assertEquals("Ошибка сравнения заголовка вкладки", "Страхование путешественников", driver.getTitle());
 
 
         //Заполнение формы "Оформление"
@@ -123,24 +97,19 @@ public class insuranceTest {
         driver.findElement(By.xpath("//*[contains(text(), 'Продолжить')]")).click();                                        //Клик по кнопке "продолжить"
 
         Assert.assertEquals("Ошибка При заполнении данных произошла ошибка не появилась "
-                ,"При заполнении данных произошла ошибка", driver.findElement(By.xpath("//div[@class=\"alert-form alert-form-error\"]")).getText());
+                , "При заполнении данных произошла ошибка", driver.findElement(By.xpath("//div[@class=\"alert-form alert-form-error\"]")).getText());
 
-        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ","Поле не заполнено."
+        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ", "Поле не заполнено."
                 , driver.findElement(By.xpath("//input[@id='phone']/..//span[@class='invalid-validate form-control__message']")).getText());
 
-        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ","Поле не заполнено."
+        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ", "Поле не заполнено."
                 , driver.findElement(By.xpath("//input[@id='email']/..//span[@class='invalid-validate form-control__message']")).getText());
 
-        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ","Поле не заполнено."
+        Assert.assertEquals("Ошибка Поле не заполнено. не появилась ", "Поле не заполнено."
                 , driver.findElement(By.xpath("//input[@id='repeatEmail']/..//span[@class='invalid-validate form-control__message']")).getText());
 
 
     }
-
-
-    @After
-    public void afterTest() {
-        driver.quit();                                                              // закрываем браузер
-    }
-
 }
+
+
