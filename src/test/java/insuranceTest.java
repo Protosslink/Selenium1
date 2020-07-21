@@ -48,6 +48,11 @@ public class insuranceTest {
         }
     }
 
+    public class InsuranceTest {
+        WebDriver driver;
+        String baseUrl;
+    }
+
     @Before
     public void beforeTest() {
         System.setProperty("webdriver.chrome.driver", "drv/chromedriver.exe");
