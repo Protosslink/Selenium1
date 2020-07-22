@@ -11,15 +11,15 @@ public class TestProperties {
 
     private static TestProperties INSTANCE = null;
 
-    private TestProperties() throws IOException {
+    private TestProperties() {
         try {
-            properties.load(new FileInputStream(new File("./" + System.getProperty("environment") + ".properties")));
-        } catch (IIOException | FileNotFoundException e) {
+            properties.load(new FileInputStream(new File("./" + System.getProperty("environment"))));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static TestProperties getInstance() throws IOException {
+    public static TestProperties getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new TestProperties();
         }

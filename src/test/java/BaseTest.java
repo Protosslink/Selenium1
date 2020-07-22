@@ -16,15 +16,7 @@ public class BaseTest {
 
     protected static WebDriver driver;
     protected static String baseUrl;
-    public static Properties properties;
-
-    static {
-        try {
-            properties = TestProperties.getInstance().getProperties();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public static Properties properties = TestProperties.getInstance().getProperties();
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -35,31 +27,21 @@ public class BaseTest {
                 driver = new FirefoxDriver();
                 break;
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", properties.getProperty("webdriver.chrome.driver"));
-                driver = new ChromeDriver();
-                break;
             default:
                 System.setProperty("webdriver.chrome.driver", properties.getProperty("webdriver.chrome.driver"));
                 driver = new ChromeDriver();
         }
+
         baseUrl = properties.getProperty("app.url");
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get(baseUrl);
+
     }
 
     @AfterClass
     public static void tearDown() throws Exception {
         driver.quit();
-    }
-
-    protected boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-
     }
 
 
@@ -71,7 +53,7 @@ public class BaseTest {
 
     }
 
-    protected void checkFillField(String value, By locator){
+    protected void checkFillField(String value, By locator) {
         Assert.assertEquals(value, driver.findElement(locator).getAttribute(value));
     }
 
