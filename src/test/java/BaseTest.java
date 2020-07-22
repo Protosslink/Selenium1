@@ -62,6 +62,7 @@ public class BaseTest {
 
     }
 
+
     public void fildFieldString(By locator, String valueString) {
         WebElement element = driver.findElement(locator);
         element.click();                        //Клип по полю
