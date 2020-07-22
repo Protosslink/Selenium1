@@ -15,11 +15,30 @@ public class TravelFormingPage {
     }
 
     @FindBy(xpath = "//div[@class='online-card-program selected']/h3[text()]")   //Получаем список выбранных программ
-    List<WebElement> cardProgramSelected;
+            List<WebElement> cardProgramSelected;
 
-    public void checkCardProgramSelected(String program){
-        for (WebElement programSelected:cardProgramSelected) {
-            if(programSelected.getText().equalsIgnoreCase(program)){
+    @FindBy(xpath = "//button[text()='Оформить']")
+    WebElement buttonArrange;
+
+    @FindBy(xpath = "//span[@class='control-label']")
+    List<WebElement> controlLabel;
+
+    public void clickButtonArrange() {
+        buttonArrange.click();
+    }
+
+    public void fildField(String word) {
+        for (WebElement selectWord:controlLabel) {
+            if(selectWord.getText().equalsIgnoreCase(word)){
+                element.sendKeys(valueString);
+            }
+
+        }
+    }
+
+    public void checkCardProgramSelected(String program) {
+        for (WebElement programSelected : cardProgramSelected) {
+            if (programSelected.getText().equalsIgnoreCase(program)) {
                 System.out.println("Выбрана нужная программа страхования");
                 return;
             }

@@ -17,6 +17,7 @@ public class MyRefactoringTest extends BaseTest{
 
         TravelFormingPage travelFormingPage = new TravelFormingPage(driver);
         travelFormingPage.checkCardProgramSelected("Минимальная");
+        travelFormingPage.clickButtonArrange();
 
     }
 }
