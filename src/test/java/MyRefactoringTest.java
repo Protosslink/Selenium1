@@ -17,7 +17,8 @@ public class MyRefactoringTest extends BaseTest{
 
         TravelFormingPage travelFormingPage = new TravelFormingPage(driver);
         travelFormingPage.checkCardProgramSelected("Минимальная");
-        travelFormingPage.clickButton(buttonArrange);
+
+        travelFormingPage.clickButton("Оформить");
 
         travelFormingPage.fieldField("Фамилия","Барабанов");
         travelFormingPage.fieldField("Имя","Дмитрий");
@@ -31,7 +32,7 @@ public class MyRefactoringTest extends BaseTest{
         travelFormingPage.fieldField("Дата выдачи","07.04.2009");
         travelFormingPage.fieldField("Кем выдан","ФМС");
 
-        travelFormingPage.clickButtonArrange();
+        travelFormingPage.clickButton("Продолжить");
 
         travelFormingPage.checkInvalidMessageOnField("name_vzr_ins_0");
         travelFormingPage.checkInvalidMessageOnField("passportSeries");

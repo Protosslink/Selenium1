@@ -27,7 +27,7 @@ public class TravelFormingPage {
     @FindBy(xpath = "//button[text()='Оформить']")
     WebElement buttonArrange;
 
-    @FindBy(xpath = "//button[@class='btn btn-primary page__btn waves-effect' and contains(text(), 'Продолжить')]")
+    @FindBy(xpath = "//button[@class='btn btn-primary page__btn' and contains(text(), 'Продолжить')]")
     WebElement buttonSubmit;
 
     @FindBy(xpath = "//span[@class='control-label']")
@@ -103,22 +103,31 @@ public class TravelFormingPage {
                 break;
             case "Дата рождения":
                 fieldField(birthDate, value);
+                break;
             case "Страхователь фамилия":
                 fieldField(personLastName, value);
+                break;
             case "Страхователь имя":
                 fieldField(personFirstName, value);
+                break;
             case "Страхователь отчество":
                 fieldField(personMiddleName, value);
+                break;
             case "Страхователь дата рождения":
                 fieldField(personBirthDate, value);
+                break;
             case "Серия паспорта":
                 fieldField(passportSeries, value);
+                break;
             case "Номер паспотра":
                 fieldField(passportNumber, value);
+                break;
             case "Дата выдачи":
                 fieldField(passportDate, value);
+                break;
             case "Кем выдан":
                 fieldField(documentIssue, value);
+                break;
         }
     }
 
@@ -130,8 +139,19 @@ public class TravelFormingPage {
     }
 
 
-    public void clickButton(WebElement button) {
-        button.click();
+    public void clickButton(String nameButton) {
+        switch (nameButton){
+            case "Оформить":
+                clickButton(buttonArrange);
+                break;
+            case "Продолжить":
+                clickButton(buttonSubmit);
+                break;
+        }
+    }
+
+    public void clickButton(WebElement webElement){
+        webElement.click();
     }
 
 
