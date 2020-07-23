@@ -22,10 +22,13 @@ public class TravelFormingPage {
     public WebElement title;
 
     @FindBy(xpath = "//div[@class='online-card-program selected']/h3[text()]")   //Получаем список выбранных программ
-            List<WebElement> cardProgramSelected;
+    List<WebElement> cardProgramSelected;
 
     @FindBy(xpath = "//button[text()='Оформить']")
     WebElement buttonArrange;
+
+    @FindBy(xpath = "//button[@class='btn btn-primary page__btn waves-effect' and contains(text(), 'Продолжить')]")
+    WebElement buttonSubmit;
 
     @FindBy(xpath = "//span[@class='control-label']")
     List<WebElement> controlLabel;
@@ -63,7 +66,34 @@ public class TravelFormingPage {
     @FindBy(id = "documentIssue")
     WebElement documentIssue;
 
-    public void fildField(String fieldName, String value) {
+    @FindBy(id = "phone")
+    WebElement phone;
+
+    @FindBy(id = "email")
+    WebElement email;
+
+    @FindBy(id = "repeatEmail")
+    WebElement repeatEmail;
+
+    @FindBy(xpath = "//span[@class='invalid-validate form-control__message']/../../input")
+    List<WebElement> invalidMessage;
+
+    @FindBy(xpath = "//div[@class='alert-form alert-form-error']")
+    WebElement alertFormError;
+
+    public void checkAlertFormError() {
+        alertFormError.getText().equalsIgnoreCase("При заполнении данных произошла ошибка");
+    }
+
+    public void checkInvalidMessageOnField(String idField) {
+        for (WebElement invalidMessage : invalidMessage) {
+            if (invalidMessage.getAttribute("id").equalsIgnoreCase(idField)) {
+                System.out.println("Поле с id " + idField + " не заполнено");
+            }
+        }
+    }
+
+    public void fieldField(String fieldName, String value) {
         switch (fieldName) {
             case "Фамилия":
                 fieldField(lastName, value);
@@ -73,7 +103,22 @@ public class TravelFormingPage {
                 break;
             case "Дата рождения":
                 fieldField(birthDate, value);
-
+            case "Страхователь фамилия":
+                fieldField(personLastName, value);
+            case "Страхователь имя":
+                fieldField(personFirstName, value);
+            case "Страхователь отчество":
+                fieldField(personMiddleName, value);
+            case "Страхователь дата рождения":
+                fieldField(personBirthDate, value);
+            case "Серия паспорта":
+                fieldField(passportSeries, value);
+            case "Номер паспотра":
+                fieldField(passportNumber, value);
+            case "Дата выдачи":
+                fieldField(passportDate, value);
+            case "Кем выдан":
+                fieldField(documentIssue, value);
         }
     }
 
@@ -85,8 +130,8 @@ public class TravelFormingPage {
     }
 
 
-    public void clickButtonArrange() {
-        buttonArrange.click();
+    public void clickButton(WebElement button) {
+        button.click();
     }
 
 
